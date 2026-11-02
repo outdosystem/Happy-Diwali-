@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#170c2d">
+  <meta name="description" content="Create a personalized Happy Diwali greeting from Outdo System.">
+  <title>Happy Diwali | Outdo System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+/* Outdo System — Happy Diwali greeting */
+:root {
+  --night: #170c2d;
+  --night-2: #28103d;
+  --gold: #ffd779;
+  --gold-deep: #e7a52f;
+  --cream: #fff5df;
+  --muted: #d7c9df;
+  --rose: #f47e9c;
+}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; margin: 0; }
+body {
+  color: var(--cream);
+  background: radial-gradient(ellipse at 50% 0%, #48204e 0%, #241035 43%, #10091f 100%);
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
+}
+button, input { font: inherit; }
+.ambient-glow {
+  position: fixed; inset: -25%; pointer-events: none; z-index: 0;
+  background: radial-gradient(circle at 15% 30%, #ff9c3c16, transparent 25%),
+              radial-gradient(circle at 82% 70%, #e54c8c19, transparent 26%);
+  filter: blur(22px);
+}
+.screen { position: relative; z-index: 1; min-height: 100svh; }
+.entry-screen {
+  display: flex; align-items: center; justify-content: center;
+  padding: 100px 20px 58px; isolation: isolate; overflow: hidden;
+}
+.entry-screen::before, .entry-screen::after {
+  content: ""; position: absolute; width: 300px; height: 300px; border: 1px solid #ffd77920;
+  border-radius: 50%; z-index: -1; pointer-events: none;
+}
+.entry-screen::before { top: -180px; left: -110px; box-shadow: 0 0 0 22px #ffd77908, 0 0 0 46px #ffd77906; }
+.entry-screen::after { right: -160px; bottom: -200px; width: 440px; height: 440px; box-shadow: 0 0 0 24px #ffd77908; }
+.entry-top-brand, .brand-lockup {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; color: var(--cream); text-decoration: none;
+}
+.entry-top-brand { position: absolute; z-index: 4; top: 10px; left: 50%; transform: translateX(-50%); }
+.brand-logo { display: block; width: 190px; height: auto; filter: drop-shadow(0 4px 12px #08020f55); }
+.brand-diya { display: block; width: 48px; height: 48px; flex: 0 0 auto; position: relative; isolation: isolate; }
+.brand-diya img { display: block; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 8px #ffad3e65); }
+.brand-diya::after {
+  content: ""; position: absolute; z-index: 1; left: 50%; top: 41%; width: 25px; height: 29px;
+  border-radius: 50%; background: radial-gradient(ellipse, #ffe18ecc 0%, #ff9b3580 34%, #ff851c3d 62%, transparent 80%);
+  filter: blur(4px); mix-blend-mode: screen; pointer-events: none;
+  animation: diya-glow-pulse .55s ease-in-out infinite alternate;
+}
+.brand-diya-flame {
+  position: absolute; z-index: 2; left: 50%; top: 22%; width: 10px; height: 17px; margin-left: -5px;
+  transform-origin: 50% 92%; pointer-events: none;
+  clip-path: polygon(50% 0, 67% 23%, 91% 49%, 94% 68%, 82% 86%, 64% 97%, 50% 100%, 33% 97%, 17% 85%, 7% 67%, 12% 48%, 34% 20%);
+  background: linear-gradient(180deg, #fffde5 0%, #fff1a1 28%, #ffc331 61%, #ff741b 100%);
+  filter: drop-shadow(0 0 4px #ffe174c0); mix-blend-mode: screen;
+  animation: diya-flame-flicker .14s ease-in-out infinite alternate;
+}
+.entry-card {
+  width: min(100%, 560px); padding: 36px 38px 30px; position: relative;
+  border: 1px solid #ffd77945; border-radius: 28px;
+  background: linear-gradient(145deg, #ffffff0d, #ffffff04);
+  box-shadow: 0 28px 90px #08020f75, inset 0 1px #ffffff12;
+  backdrop-filter: blur(15px);
+  animation: rise-in .8s cubic-bezier(.2,.75,.2,1) both;
+}
+.entry-card::before {
+  content: ""; position: absolute; inset: 9px; border: 1px solid #ffd77913; border-radius: 21px; pointer-events: none;
+}
+.diya-image-frame { width: min(100%, 220px); height: 178px; margin: 0 auto 17px; position: relative; isolation: isolate; }
+.diya-image-frame img {
+  display: block; width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 5px 14px #08020f40);
+}
+.diya-image-frame::after {
+  content: ""; position: absolute; z-index: 1; left: 50%; top: 41%; width: 92px; height: 104px;
+  border-radius: 50%; background: radial-gradient(ellipse, #ffe18ecc 0%, #ff9b3580 32%, #ff851c45 57%, transparent 78%);
+  filter: blur(10px); mix-blend-mode: screen; pointer-events: none;
+  animation: diya-glow-pulse .55s ease-in-out infinite alternate;
+}
+.diya-flame-live {
+  position: absolute; z-index: 2; left: 50%; top: 22%; width: 38px; height: 65px; margin-left: -19px;
+  transform-origin: 50% 92%; pointer-events: none;
+  border-radius: 58% 42% 53% 47% / 72% 72% 28% 28%;
+  clip-path: polygon(50% 0, 67% 23%, 91% 49%, 94% 68%, 82% 86%, 64% 97%, 50% 100%, 33% 97%, 17% 85%, 7% 67%, 12% 48%, 34% 20%);
+  background: linear-gradient(180deg, #fffde5 0%, #fff1a1 28%, #ffc331 61%, #ff741b 100%);
+  filter: drop-shadow(0 0 8px #ffe174c0) drop-shadow(0 0 16px #ff812e99);
+  mix-blend-mode: screen; animation: diya-flame-flicker .14s ease-in-out infinite alternate;
+}
+.eyebrow, .wish-kicker { color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+.entry-card h1 { margin: 11px 0 14px; font: 700 clamp(29px, 5vw, 43px)/1.15 "Playfair Display", serif; }
+.entry-card h1 span { color: var(--gold); font-style: italic; }
+.entry-description { max-width: 420px; margin: 0 auto 25px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.name-form { position: relative; z-index: 1; max-width: 390px; margin: auto; }
+.name-input {
+  height: 54px; padding: 0 18px; border-radius: 12px; border: 1px solid #fbd98465;
+  color: #fff7e8; background: #10091f85; text-align: center; letter-spacing: .4px;
+}
+.name-input::placeholder { color: #c9b9d2; }
+.name-input:focus { color: white; background: #10091f; border-color: var(--gold); box-shadow: 0 0 0 4px #ffd77919; }
+.btn-diwali {
+  min-height: 51px; border: 0; border-radius: 12px; padding: 13px 20px;
+  color: #2a1430; font-weight: 800; background: linear-gradient(110deg, #fff0b6, #ffc94e 55%, #f0a62d);
+  box-shadow: 0 8px 25px #e7a52f22; transition: transform .2s, box-shadow .2s, filter .2s;
+}
+.name-form .btn-diwali { margin-top: 12px; }
+.btn-diwali:hover { color: #2a1430; transform: translateY(-2px); filter: brightness(1.06); box-shadow: 0 12px 30px #e7a52f40; }
+.btn-diwali span { margin-left: 8px; }
+.name-error { color: #ff9cae; font-size: 12px; margin: 8px 0 0; }
+.entry-footnote { color: #bba8c9; font-size: 10px; letter-spacing: 1px; margin: 22px 0 0; }
+.entry-footnote span { color: var(--gold); padding: 0 5px; }
+.corner-lamp { position: absolute; color: #ffd7794d; font-size: 35px; bottom: 40px; animation: slow-spin 18s linear infinite; }
+.corner-lamp-left { left: 8%; }.corner-lamp-right { right: 8%; }
+
+/* Full-screen celebration */
+.wish-screen { min-height: 100svh; overflow: hidden; isolation: isolate; background: #10091f; }
+.wish-screen[hidden] { display: none !important; }
+.wish-screen.wish-launching .wish-content { visibility: hidden; opacity: 0; transform: translateY(12px) scale(.98); }
+.wish-screen.wish-launching .festival-footer { opacity: 0; }
+#fireworksCanvas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
+.festival-vignette { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at center, #170c2d20 0%, #12082042 64%, #10091fb8 100%); }
+.wish-header { position: absolute; z-index: 4; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: center; padding: 12px 20px; gap: 18px; }
+.wish-content {
+  width: min(780px, 100%); min-height: 100svh; margin: 0 auto; padding: 135px 24px 105px;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  position: relative; z-index: 3; text-shadow: 0 2px 18px #10051f66;
+  transition: opacity .55s ease, transform .55s ease;
+}
+.wish-kicker { display: flex; align-items: center; gap: 12px; font-size: 9px; letter-spacing: 3px; }
+.wish-kicker span { width: 28px; height: 1px; background: var(--gold); opacity: .7; }
+.personal-greeting { color: #e9d9f0; font-size: 14px; margin: 24px 0 4px; }
+.personal-greeting strong { color: var(--gold); }
+.happy-title { margin: 0; font: 800 clamp(58px, 10vw, 112px)/.95 "Playfair Display", serif; letter-spacing: -2px; }
+.happy-title span { color: #fff7e7; }
+.happy-title em {
+  font-style: normal; background: linear-gradient(180deg, #fff5c6 5%, #ffd05a 48%, #ed9230 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 25px #ffb52b3d);
+}
+.ornament { display: flex; align-items: center; gap: 13px; margin: 20px 0 15px; color: var(--gold); font-size: 17px; }
+.ornament span { width: 56px; height: 1px; background: linear-gradient(90deg, transparent, #ffd779); }
+.ornament span:last-child { transform: rotate(180deg); }
+.wish-description { max-width: 590px; margin: 0 auto; color: #eee2f0; font-size: clamp(13px, 2vw, 16px); line-height: 1.85; }
+.from-line { color: #c9b9d2; font-size: 12px; margin: 17px 0 0; letter-spacing: .5px; }
+.from-line strong { color: var(--gold); }
+.service-note {
+  position: absolute; z-index: 5; top: 116px; left: 50%; transform: translate(-50%, 6px) scale(.96);
+  display: flex; align-items: center; justify-content: center; width: fit-content; max-width: calc(100% - 32px);
+  min-height: 34px; margin: 0; padding: 7px 16px; border: 1px solid #ffd77975; border-radius: 999px;
+  color: #fff2c2; background: #170c2de8; box-shadow: 0 0 18px #ffb52b33;
+  font-size: 19px; font-weight: 800; letter-spacing: .6px; line-height: 1.15; text-align: center; text-transform: uppercase; white-space: nowrap;
+  opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+}
+.service-note.service-active { transform: translate(-50%, 0) scale(1); opacity: 1; visibility: visible; }
+.service-note.service-change { animation: service-flash .32s ease-out; }
+.wish-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.wish-actions .btn { min-width: 160px; }
+.btn-outline-gold { border: 1px solid #ffd77990; color: var(--cream); border-radius: 12px; padding: 13px 20px; background: #170c2d75; font-weight: 700; }
+.btn-outline-gold:hover { color: var(--gold); border-color: var(--gold); background: #ffffff0c; }
+.festival-footer { position: absolute; bottom: 21px; left: 16px; right: 16px; z-index: 3; text-align: center; color: #c9b9d2a8; font-size: 10px; letter-spacing: 1.2px; }
+.festival-footer span { color: var(--gold); padding-left: 6px; }
+.toast-message { position: fixed; z-index: 10; left: 50%; bottom: 60px; transform: translate(-50%, 15px); opacity: 0; pointer-events: none; background: #fff1c9; color: #28103d; border-radius: 12px; padding: 12px 17px; font-size: 13px; font-weight: 700; box-shadow: 0 10px 35px #0005; transition: .25s; max-width: calc(100% - 28px); text-align: center; }
+.toast-message.show { opacity: 1; transform: translate(-50%, 0); }
+@keyframes rise-in { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes diya-flame-flicker {
+  from { opacity: .76; transform: rotate(-4deg) scaleX(.93) scaleY(.97); }
+  to { opacity: 1; transform: rotate(4deg) scaleX(1.05) scaleY(1.04); }
+}
+@keyframes diya-glow-pulse {
+  from { opacity: .55; transform: translate(-50%, -50%) scale(.88); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1.12); }
+}
+@keyframes slow-spin { to { transform: rotate(360deg); } }
+@keyframes service-flash {
+  0% { filter: brightness(1.7); box-shadow: 0 0 30px #ffb52b88; }
+  100% { filter: brightness(1); box-shadow: 0 0 18px #ffb52b33; }
+}
+@media (max-width: 600px) {
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+  body { position: fixed; inset: 0; }
+  .screen { width: 100%; height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; }
+  .entry-screen, .wish-screen {
+    background-image: linear-gradient(180deg, #10091f40 0%, #10091f35 48%, #10091f75 100%), url("diwali-assets/phone-diwali-background.png");
+    background-position: center, center; background-size: cover, cover; background-repeat: no-repeat, no-repeat;
+  }
+  .entry-screen { padding: 72px 12px 12px; }
+  .entry-top-brand { top: 6px; left: 50%; }
+  .entry-top-brand .brand-logo { width: min(140px, 42vw); }
+  .brand-diya { width: 34px; height: 34px; }
+  .brand-diya::after { width: 19px; height: 22px; }
+  .brand-diya-flame { width: 8px; height: 13px; margin-left: -4px; }
+  .entry-card { padding: 18px 18px 15px; border-radius: 22px; }
+  .diya-image-frame { width: min(100%, 170px); height: clamp(96px, 16vh, 130px); height: clamp(96px, 16dvh, 130px); margin-bottom: 7px; }
+  .diya-image-frame::after { width: 68px; height: 76px; }
+  .diya-flame-live { width: 30px; height: 46px; margin-left: -15px; }
+  .entry-card .eyebrow { margin: 3px 0; font-size: 9px; letter-spacing: 1.7px; }
+  .entry-card h1 { margin: 6px 0 8px; font-size: clamp(25px, 7vw, 32px); }
+  .entry-description { margin-bottom: 12px; font-size: 12px; line-height: 1.45; }
+  .name-input { height: 46px; }
+  .name-form .btn-diwali { min-height: 45px; margin-top: 8px; padding: 10px 15px; }
+  .name-error { margin-top: 5px; font-size: 11px; }
+  .entry-footnote { margin-top: 10px; font-size: 8px; letter-spacing: .65px; }
+  .corner-lamp { display: none; }
+  .wish-header { padding: 6px 8px; align-items: center; }
+  .wish-header .brand-logo { width: min(140px, 42vw); }
+  .wish-content { width: 100%; height: 100%; min-height: 0; padding: 82px 14px 54px; }
+  .wish-kicker { font-size: 8px; letter-spacing: 1.4px; gap: 7px; }
+  .wish-kicker span { width: 17px; }
+  .personal-greeting { margin: 9px 0 3px; font-size: 12px; }
+  .happy-title { font-size: clamp(48px, 13vw, 68px); letter-spacing: -1px; }
+  .ornament { gap: 9px; margin: 8px 0; font-size: 14px; }
+  .ornament span { width: 35px; }
+  .wish-description { font-size: 12px; line-height: 1.45; }
+  .from-line { margin-top: 8px; font-size: 11px; }
+  .service-note { top: 70px; min-height: 27px; max-width: calc(100% - 24px); padding: 5px 12px; font-size: 12px; letter-spacing: .4px; }
+  .service-note.service-active { min-height: 27px; }
+  .wish-actions { width: 100%; gap: 8px; margin-top: 12px; }
+  .wish-actions .btn { min-width: 0; min-height: 39px; flex: 1 1 140px; font-size: 11px; padding: 9px 10px; }
+  .festival-footer { font-size: 7px; letter-spacing: .5px; bottom: 8px; }
+  .toast-message { bottom: 12px; padding: 10px 13px; font-size: 12px; }
+}
+@media (max-width: 600px) and (max-height: 600px) {
+  .entry-screen { padding: 62px 10px 8px; }
+  .entry-card { padding: 12px 15px 10px; }
+  .diya-image-frame { height: 84px; margin-bottom: 4px; }
+  .diya-image-frame::after { width: 54px; height: 60px; }
+  .diya-flame-live { width: 24px; height: 35px; margin-left: -12px; }
+  .entry-description { margin-bottom: 8px; font-size: 11px; line-height: 1.35; }
+  .name-input { height: 42px; }
+  .name-form .btn-diwali { min-height: 40px; margin-top: 6px; padding: 8px 12px; }
+  .entry-footnote { margin-top: 7px; }
+  .wish-content { padding: 70px 12px 42px; }
+  .happy-title { font-size: clamp(42px, 12vw, 58px); }
+  .wish-description { font-size: 11px; line-height: 1.35; }
+  .wish-actions { margin-top: 8px; }
+  .wish-actions .btn { min-height: 35px; padding: 7px 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <!-- Screen 1: welcome / name entry -->
+  <main id="entryScreen" class="entry-screen screen active">
+    <div class="entry-top-brand">
+      <span class="brand-diya" aria-hidden="true"><img src="diwali-assets/diya.png" alt=""><i class="brand-diya-flame"></i></span>
+      <img class="brand-logo" src="diwali-assets/outdo-system-logo.png" alt="Outdo System — Digital Marketing Agency">
+      <span class="brand-diya" aria-hidden="true"><img src="diwali-assets/diya.png" alt=""><i class="brand-diya-flame"></i></span>
+    </div>
+    <section class="entry-card text-center" aria-labelledby="entryTitle">
+      <div class="diya-image-frame">
+        <img src="diwali-assets/diya.png" alt="Diwali diya lamp with rangoli" width="5000" height="5000">
+        <span class="diya-flame-live" aria-hidden="true"></span>
+      </div>
+      <p class="eyebrow">A little light. A lot of happiness.</p>
+      <h1 id="entryTitle">Make this Diwali <span>personal.</span></h1>
+      <p class="entry-description">May your home glow with happiness, your heart shine with hope, and every new beginning bring success. Add your name to create your own Diwali greeting.</p>
+      <form id="nameForm" class="name-form" novalidate>
+        <label for="visitorName" class="visually-hidden">Enter your name</label>
+        <input id="visitorName" name="visitorName" class="form-control name-input" type="text" maxlength="48" placeholder="Enter your name" autocomplete="name" required>
+        <p id="nameError" class="name-error" role="alert" hidden>Please enter your name to continue.</p>
+        <button class="btn btn-diwali w-100" type="submit">Create My Diwali Wish <span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="entry-footnote"><span aria-hidden="true">✦</span> A festive greeting from Outdo System <span aria-hidden="true">✦</span></p>
+    </section>
+    <div class="corner-lamp corner-lamp-left" aria-hidden="true">✦</div>
+    <div class="corner-lamp corner-lamp-right" aria-hidden="true">✦</div>
+  </main>
+
+  <!-- Screen 2: full-screen celebration -->
+  <main id="wishScreen" class="wish-screen screen" hidden>
+    <canvas id="fireworksCanvas" aria-hidden="true"></canvas>
+    <div class="festival-vignette" aria-hidden="true"></div>
+    <header class="wish-header">
+      <a class="brand-lockup" href="#" aria-label="Outdo System home">
+        <span class="brand-diya" aria-hidden="true"><img src="diwali-assets/diya.png" alt=""><i class="brand-diya-flame"></i></span>
+        <img class="brand-logo" src="diwali-assets/outdo-system-logo.png" alt="">
+        <span class="brand-diya" aria-hidden="true"><img src="diwali-assets/diya.png" alt=""><i class="brand-diya-flame"></i></span>
+      </a>
+    </header>
+
+    <div class="service-note" id="serviceNote" aria-live="polite"></div>
+    <section class="wish-content text-center" aria-live="polite">
+      <div class="wish-kicker"><span></span> LIGHT • LOVE • PROSPERITY <span></span></div>
+      <p class="personal-greeting">A special wish for <strong id="displayName">Friend</strong></p>
+      <h1 class="happy-title"><span>Happy</span><br><em>Diwali!</em></h1>
+      <div class="ornament" aria-hidden="true"><span></span> ✧ <span></span></div>
+      <p class="wish-description">May the lights of Diwali brighten your path, fill your life with peace and prosperity, and bring you endless reasons to smile. Wishing you and your family a sparkling, joyful and successful Diwali!</p>
+      <p class="from-line">With warm wishes from <strong>Outdo System</strong></p>
+      <div class="wish-actions">
+        <button id="shareButton" class="btn btn-diwali" type="button">Share My Wish <span aria-hidden="true">↗</span></button>
+        <button id="againButton" class="btn btn-outline-gold" type="button">Create Another</button>
+      </div>
+    </section>
+    <div class="festival-footer">May your dreams rise higher than the fireworks <span aria-hidden="true">✦</span></div>
+    <div id="toastMessage" class="toast-message" role="status" aria-live="polite"></div>
+  </main>
+
+  <script>
+(() => {
+  "use strict";
+
+  const entryScreen = document.getElementById("entryScreen");
+  const wishScreen = document.getElementById("wishScreen");
+  const nameForm = document.getElementById("nameForm");
+  const visitorName = document.getElementById("visitorName");
+  const nameError = document.getElementById("nameError");
+  const displayName = document.getElementById("displayName");
+  const shareButton = document.getElementById("shareButton");
+  const againButton = document.getElementById("againButton");
+  const serviceNote = document.getElementById("serviceNote");
+  const canvas = document.getElementById("fireworksCanvas");
+  const ctx = canvas.getContext("2d");
+  const toast = document.getElementById("toastMessage");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const scriptFontReady = document.fonts && document.fonts.load
+    ? document.fonts.load('700 96px "Dancing Script"').catch(() => [])
+    : Promise.resolve();
+
+  const services = [
+    "Web Development", "Web Designing", "Graphic Designing", "Video Editing",
+    "SEO", "Logo Designing", "Software Designing", "Social Media Management",
+    "Domain & Hosting"
+  ];
+  const fireworkColors = ["#ffd166", "#ff5d8f", "#7bdff2", "#b8f2a1", "#c8a2ff", "#ff925c", "#fff3b0"];
+  let width = 0, height = 0, dpr = 1, animationFrame = 0;
+  let rockets = [], particles = [], launchTimer = 0, serviceIndex = 0;
+  let greetingRocketPending = false, wishRevealTimer = null, wishWriting = null;
+  let toastTimer = null, lastSoundAt = 0;
+  // Recorded firework rocket sound. Audio begins after the visitor submits their name,
+  // which counts as a user gesture in modern browsers.
+  const rocketAudio = new Audio("https://www.orangefreesounds.com/wp-content/uploads/2018/01/Firework-rocket-sound-effect.mp3");
+  rocketAudio.preload = "auto";
+  rocketAudio.volume = 0.42;
+  function resizeCanvas() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener("resize", resizeCanvas, { passive: true });
+  resizeCanvas();
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+  }
+
+  function showWish(name) {
+    displayName.textContent = name;
+    clearTimeout(wishRevealTimer);
+    wishWriting = null;
+    wishScreen.classList.add("wish-launching");
+    entryScreen.classList.remove("active");
+    entryScreen.hidden = true;
+    wishScreen.hidden = false;
+    requestAnimationFrame(() => wishScreen.classList.add("active"));
+    serviceIndex = 0;
+    lastSoundAt = 0;
+    // Start the real recorded cracker/rocket sound from the name-submit gesture.
+    playRealFireworkSound();
+    serviceNote.textContent = "";
+    serviceNote.classList.remove("service-active");
+    rockets = [];
+    particles = [];
+    launchTimer = 0;
+    greetingRocketPending = true;
+    launchGreetingRocket();
+    if (!animationFrame) animate();
+  }
+
+  function returnToEntry() {
+    wishScreen.hidden = true;
+    wishScreen.classList.remove("active");
+    wishScreen.classList.remove("wish-launching");
+    clearTimeout(wishRevealTimer);
+    wishWriting = null;
+    greetingRocketPending = false;
+    entryScreen.hidden = false;
+    entryScreen.classList.add("active");
+    visitorName.value = "";
+    nameError.hidden = true;
+    rocketAudio.pause();
+    rocketAudio.currentTime = 0;
+    serviceNote.textContent = "";
+    serviceNote.classList.remove("service-active");
+    visitorName.focus();
+  }
+
+  nameForm.addEventListener("submit", event => {
+    event.preventDefault();
+    const name = visitorName.value.trim().replace(/\s+/g, " ");
+    if (!name) {
+      nameError.hidden = false;
+      visitorName.focus();
+      return;
+    }
+    nameError.hidden = true;
+    showWish(name);
+  });
+  visitorName.addEventListener("input", () => { if (visitorName.value.trim()) nameError.hidden = true; });
+  againButton.addEventListener("click", returnToEntry);
+
+  async function shareWish() {
+    const name = displayName.textContent;
+    const text = `Happy Diwali, from ${name}! May the lights of Diwali brighten your path, fill your life with peace, prosperity and happiness. Warm wishes from Outdo System.`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "Happy Diwali | Outdo System", text });
+        return;
+      } catch (err) {
+        if (err && err.name === "AbortError") return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast("Your Diwali wish has been copied. Share it anywhere!");
+    } catch {
+      showToast("Select and copy your greeting to share it with friends.");
+    }
+  }
+  shareButton.addEventListener("click", shareWish);
+
+  function playRealFireworkSound() {
+    const now = Date.now();
+    // Avoid a wall of overlapping audio while several rockets burst together.
+    if (now - lastSoundAt < 620) return;
+    lastSoundAt = now;
+    try {
+      rocketAudio.currentTime = 0;
+      const playPromise = rocketAudio.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => showToast("If sound is blocked, click the page once and try again."));
+      }
+    } catch (_) { /* Some browsers may block audio until interaction. */ }
+  }
+
+  function launchRocket() {
+    const startX = width * (0.09 + Math.random() * 0.82);
+    const targetY = Math.max(88, height * (0.1 + Math.random() * 0.44));
+    const service = services[serviceIndex % services.length];
+    serviceIndex++;
+    rockets.push({
+      x: startX, y: height + 18, vx: (Math.random() - 0.5) * 1.0,
+      vy: -(5.5 + Math.random() * 1.9), targetY,
+      color: fireworkColors[Math.floor(Math.random() * fireworkColors.length)],
+      service, trail: [], life: 0
+    });
+  }
+
+  function launchGreetingRocket() {
+    rockets.push({
+      x: width * 0.5, y: height + 18, vx: (Math.random() - 0.5) * 0.3,
+      vy: -(6 + Math.random() * 0.8), targetY: Math.max(108, height * 0.36),
+      color: "#ffd166", service: `Happy Diwali, ${displayName.textContent}!`, trail: [], life: 0,
+      isGreeting: true
+    });
+  }
+
+  function startWishWriting() {
+    const maxTextWidth = width * 0.88;
+    const titleSize = Math.min(118, Math.max(60, width * 0.19));
+    const nameSize = Math.min(42, Math.max(24, width * 0.075));
+    const senderSize = Math.min(22, Math.max(14, width * 0.04));
+    const lines = [
+      { text: "Happy", size: titleSize, family: '"Dancing Script", "Segoe Script", "Brush Script MT", cursive', weight: 700 },
+      { text: "Diwali!", size: titleSize, family: '"Dancing Script", "Segoe Script", "Brush Script MT", cursive', weight: 700 },
+      { text: `For ${displayName.textContent}`, size: nameSize, family: '"Dancing Script", "Segoe Script", "Brush Script MT", cursive', weight: 700 },
+      { text: "From Outdo System", size: senderSize, family: '"DM Sans", Arial, sans-serif', weight: 700 }
+    ];
+    for (const line of lines) {
+      ctx.font = `${line.weight} ${line.size}px ${line.family}`;
+      let measuredWidth = ctx.measureText(line.text).width;
+      if (measuredWidth > maxTextWidth) {
+        line.size = Math.max(14, line.size * maxTextWidth / measuredWidth);
+        ctx.font = `${line.weight} ${line.size}px ${line.family}`;
+        measuredWidth = ctx.measureText(line.text).width;
+      }
+      line.width = Math.min(maxTextWidth, measuredWidth);
+    }
+    const gaps = lines.map((line, index) => index === lines.length - 1 ? 0 : Math.max(3, line.size * 0.04));
+    const blockHeight = lines.reduce((sum, line) => sum + line.size, 0) + gaps.reduce((sum, gap) => sum + gap, 0);
+    let top = Math.max(height * 0.18, height * 0.5 - blockHeight * 0.5);
+    lines.forEach((line, index) => {
+      line.x = width * 0.5;
+      line.y = top + line.size * 0.5;
+      top += line.size + gaps[index];
+    });
+
+    wishWriting = {
+      lines,
+      startAt: performance.now(),
+      duration: reducedMotion ? 140 : 900,
+      stagger: reducedMotion ? 55 : 310
+    };
+    clearTimeout(wishRevealTimer);
+    wishRevealTimer = setTimeout(() => wishScreen.classList.remove("wish-launching"), reducedMotion ? 1000 : 4400);
+  }
+
+  function drawWishWriting(now) {
+    if (!wishWriting) return;
+    const age = now - wishWriting.startAt;
+    const fade = reducedMotion ? 1 : Math.max(0, 1 - Math.max(0, age - 3800) / 600);
+    if (!fade) return;
+    for (let index = 0; index < wishWriting.lines.length; index++) {
+      const line = wishWriting.lines[index];
+      const lineAge = age - index * wishWriting.stagger;
+      if (lineAge < 0) continue;
+      const progress = Math.min(1, lineAge / wishWriting.duration);
+      const revealWidth = line.width * progress;
+      const margin = line.size * 0.08;
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter";
+      ctx.globalAlpha = fade;
+      ctx.beginPath();
+      ctx.rect(line.x - line.width * 0.5 - margin, line.y - line.size, revealWidth + margin, line.size * 2);
+      ctx.clip();
+      ctx.font = `${line.weight} ${line.size}px ${line.family}`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.shadowColor = "#ff4a1f";
+      ctx.shadowBlur = line.size * 0.34;
+      ctx.fillStyle = "#ff732e";
+      ctx.fillText(line.text, line.x, line.y, line.width);
+      ctx.shadowColor = "#ffb12e";
+      ctx.shadowBlur = line.size * 0.19;
+      ctx.fillStyle = "#ffc247";
+      ctx.fillText(line.text, line.x, line.y, line.width);
+      ctx.shadowColor = "#fff4c6";
+      ctx.shadowBlur = 5;
+      ctx.fillStyle = "#fff2c3";
+      ctx.fillText(line.text, line.x, line.y, line.width);
+      ctx.restore();
+
+      if (progress < 1) {
+        const tipX = line.x - line.width * 0.5 + revealWidth;
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+        ctx.beginPath();
+        ctx.arc(tipX, line.y, 3 + Math.random() * 2, 0, Math.PI * 2);
+        ctx.fillStyle = "#fff8d6";
+        ctx.shadowColor = "#ffb12e";
+        ctx.shadowBlur = 18;
+        ctx.globalAlpha = fade;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+  }
+
+  function showRocketService(rocket) {
+    if (!rocket.service) return;
+    serviceNote.textContent = rocket.service;
+    serviceNote.classList.add("service-active");
+    serviceNote.classList.remove("service-change");
+    void serviceNote.offsetWidth;
+    serviceNote.classList.add("service-change");
+  }
+
+  function burst(x, y, color, amount = 108, service = null) {
+    const count = reducedMotion ? Math.min(24, amount) : amount;
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i / count) + (Math.random() - 0.5) * 0.16;
+      const speed = 1.4 + Math.random() * (service ? 5.4 : 4.8);
+      particles.push({
+        x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+        gravity: 0.025 + Math.random() * 0.04, friction: 0.986,
+        alpha: 1, decay: 0.006 + Math.random() * 0.009,
+        radius: 1 + Math.random() * 2.6,
+        color: Math.random() < 0.22 ? "#fff5c9" : color,
+        sparkle: Math.random() > 0.58
+      });
+    }
+    if (!reducedMotion) {
+      for (let i = 0; i < 26; i++) {
+        const angle = Math.PI * 2 * i / 26;
+        const speed = 4.6 + Math.random() * 2.1;
+        particles.push({
+          x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          gravity: 0.018, friction: 0.982, alpha: 0.95,
+          decay: 0.014 + Math.random() * 0.012, radius: 1.2 + Math.random() * 1.2,
+          color: Math.random() > 0.35 ? "#fff0ad" : color, sparkle: true
+        });
+      }
+    }
+    playRealFireworkSound();
+  }
+
+  function drawDiwaliGroundEffects() {
+    // Tiny glowing dots suggest sparklers and ground spinners without blocking the page.
+    for (let i = 0; i < 3; i++) {
+      const x = (Date.now() * (0.018 + i * 0.006) + i * 230) % (width + 30);
+      const y = height - 18 - (i * 11);
+      ctx.beginPath(); ctx.arc(x, y, 1.4 + i * 0.3, 0, Math.PI * 2);
+      ctx.fillStyle = i % 2 ? "#ffd779" : "#ff8b55";
+      ctx.globalAlpha = 0.3 + Math.random() * 0.5;
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function animate() {
+    if (wishScreen.hidden) { animationFrame = 0; return; }
+    animationFrame = requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, width, height);
+    drawDiwaliGroundEffects();
+
+    launchTimer++;
+    const launchInterval = reducedMotion ? 85 : 27;
+    if (!greetingRocketPending && launchTimer >= launchInterval) {
+      launchTimer = 0;
+      launchRocket();
+      if (Math.random() > 0.42 && !reducedMotion) setTimeout(launchRocket, 240 + Math.random() * 420);
+    }
+
+    for (let i = rockets.length - 1; i >= 0; i--) {
+      const r = rockets[i];
+      r.trail.push({ x: r.x, y: r.y });
+      if (r.trail.length > 13) r.trail.shift();
+      r.x += r.vx; r.y += r.vy; r.vy += 0.019; r.life++;
+      for (let j = 1; j < r.trail.length; j++) {
+        const from = r.trail[j - 1];
+        const to = r.trail[j];
+        const strength = j / (r.trail.length - 1);
+        ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y);
+        ctx.strokeStyle = r.color; ctx.lineWidth = 0.8 + strength * 2.8;
+        ctx.globalAlpha = strength * 0.9; ctx.shadowBlur = 12 * strength; ctx.shadowColor = r.color;
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+      if (!reducedMotion && r.life % 2 === 0) {
+        particles.push({
+          x: r.x + (Math.random() - 0.5) * 5, y: r.y,
+          vx: (Math.random() - 0.5) * 0.9, vy: 0.3 + Math.random() * 0.8,
+          gravity: 0.018, friction: 0.965, alpha: 0.82,
+          decay: 0.025 + Math.random() * 0.018, radius: 1 + Math.random() * 1.3,
+          color: Math.random() > 0.4 ? r.color : "#fff5c9", sparkle: true
+        });
+      }
+      ctx.beginPath(); ctx.arc(r.x, r.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = "#fff8da"; ctx.shadowBlur = 20; ctx.shadowColor = r.color; ctx.fill(); ctx.shadowBlur = 0;
+      if (r.y <= r.targetY || r.vy >= -0.1 || r.life > 170) {
+        burst(r.x, r.y, r.color, r.isGreeting ? 190 : 108, r.service);
+        if (r.isGreeting) {
+          greetingRocketPending = false;
+          launchTimer = 0;
+          burst(width * 0.13, height * 0.2, "#ff5e76", 82);
+          burst(width * 0.87, height * 0.2, "#ffad45", 82);
+          scriptFontReady.then(() => {
+            if (!wishScreen.hidden) startWishWriting();
+          });
+        } else {
+          showRocketService(r);
+        }
+        rockets.splice(i, 1);
+      }
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.vx *= p.friction; p.vy = p.vy * p.friction + p.gravity;
+      p.x += p.vx; p.y += p.vy; p.alpha -= p.decay;
+      if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+      ctx.globalAlpha = Math.max(0, p.alpha);
+      ctx.fillStyle = p.color;
+      if (p.sparkle) {
+        ctx.fillRect(p.x, p.y, p.radius, p.radius);
+      } else {
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    drawWishWriting(performance.now());
+    ctx.globalAlpha = 1;
+    if (particles.length > 1400) particles.splice(0, particles.length - 1400);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) rocketAudio.pause();
+  });
+})();
+
+  </script>
+</body>
+</html>
+
